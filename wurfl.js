@@ -11,7 +11,8 @@ var revealDieCount;
 var feld; 
 var numberOfRows; 
 var diesInLastRow; 
-var a = 1.0; 															// Schummelfaktor, a=1: fair, a>1: mehr Erfolge
+var a = 0; 	
+var p = 1/3;														// Schummelfaktor, a=1: fair, a>1: mehr Erfolge
  
 function init() { 
 	var feld = document.getElementById("wuerfelfeld");			 
@@ -30,7 +31,7 @@ function init() {
 	postedged = false; 
 	row = 0;															// resette die Zeilen- und Wuerfelindizes auf den Anfang fuer reveal() 
 	die = 0; 
-	document.getElementById("cheatinfo").innerHTML = a;
+	document.getElementById("cheatinfo").innerHTML = Math.round(p*100) / 100;
 	document.getElementById("ergebnisfeld").innerHTML = null;			// leere und verstecke Anzeigefelder 
 	document.getElementById("glitchanzeige").innerHTML = null; 
 	document.getElementById("ergebnisfeld").className = "invisible"; 
@@ -59,9 +60,7 @@ function updatedice(k) {
  
 function einzelwurf() { 
 	var rnd = Math.random();						// bestimmt Zufallszahl zw. 0 und 1 
-	return Math.ceil(6*(rnd**(1/a)));				// skaliert auf ganze Zufallszahl in [1,6]
-	//const engine = Random.engines.mt19937().autoSeed();
-	//return Random.integer(1, 6)(engine);
+	return Math.ceil((1-(1-rnd)**(1+a))*6)			// skaliert auf ganze Zufallszahl in [1,6] mit Schummelparameter a. Fair: a=0
 } 
  
 function createDie(zahl) { 
@@ -311,11 +310,13 @@ function revealReRoll() {
 }
 
 function updateCheat(eps) {
-	a = Math.round(Math.max(a + eps, 0) * 10) / 10;
-	document.getElementById("cheatinfo").innerHTML = a;
+	p = Math.round(p*100)/100 + eps
+	a = -1-(Math.log(3))/(Math.log(p))
+	document.getElementById("cheatinfo").innerHTML = Math.round(p*100)/100;
 }
 
 function resetCheat() {
-	a = 1;
-	document.getElementById("cheatinfo").innerHTML = a;
+	a = 0;
+	p = 1/3;
+	document.getElementById("cheatinfo").innerHTML = Math.round(p*100) / 100;
 }
