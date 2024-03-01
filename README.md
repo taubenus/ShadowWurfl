@@ -1,6 +1,6 @@
 # ShadowWurfl
 A Shadowrun die roll web app. 
-features:
+## Features:
 * easy setting of the number of dice
 * die visualization with delayed display of the results for more exciting rolls
 * rule of six when using edge in advance
