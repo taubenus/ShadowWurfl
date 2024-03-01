@@ -310,7 +310,7 @@ function revealReRoll() {
 }
 
 function updateCheat(eps) {
-	p = Math.round(p*100)/100 + eps
+	p = Math.max(Math.round(p*100)/100 + eps, 0.01)
 	a = -1-(Math.log(3))/(Math.log(p))
 	document.getElementById("cheatinfo").innerHTML = Math.round(p*100)/100;
 }
