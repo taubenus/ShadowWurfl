@@ -1,3 +1,4 @@
+// const Random = require('random-js');
 var dieCount=0; 
 var ergebnisArray; 
 var postedged; 
@@ -10,6 +11,7 @@ var revealDieCount;
 var feld; 
 var numberOfRows; 
 var diesInLastRow; 
+var a = 1.0; 															// Schummelfaktor, a=1: fair, a>1: mehr Erfolge
  
 function init() { 
 	var feld = document.getElementById("wuerfelfeld");			 
@@ -28,6 +30,7 @@ function init() {
 	postedged = false; 
 	row = 0;															// resette die Zeilen- und Wuerfelindizes auf den Anfang fuer reveal() 
 	die = 0; 
+	document.getElementById("cheatinfo").innerHTML = a;
 	document.getElementById("ergebnisfeld").innerHTML = null;			// leere und verstecke Anzeigefelder 
 	document.getElementById("glitchanzeige").innerHTML = null; 
 	document.getElementById("ergebnisfeld").className = "invisible"; 
@@ -55,8 +58,10 @@ function updatedice(k) {
 } 
  
 function einzelwurf() { 
-	rnd = Math.random(); 										// bestimmt Zufallszahl zw. 0 und 1 
-	return Math.floor(rnd*6)+1;									// skaliert auf ganze Zufallszahl in [1,6] 
+	var rnd = Math.random();						// bestimmt Zufallszahl zw. 0 und 1 
+	return Math.ceil(6*(rnd**(1/a)));				// skaliert auf ganze Zufallszahl in [1,6]
+	//const engine = Random.engines.mt19937().autoSeed();
+	//return Random.integer(1, 6)(engine);
 } 
  
 function createDie(zahl) { 
@@ -251,10 +256,10 @@ function reveal() {
 				row++;																		// falls akuteller Wuerfel letzter in der Zeile ist: Zeilennr++, Wuerfelnr=0 
 				die=0; 
 			} 
-			(visibilityIndex==1) ? reveal() : setTimeout("reveal()",300);					// falls Wuerfel bereits sichtbar rufe reveal() ohne Verzoegerung, sonst mit 
+			(visibilityIndex==1) ? reveal() : setTimeout("reveal()", 250);					// falls Wuerfel bereits sichtbar rufe reveal() ohne Verzoegerung, sonst mit 
 		} else if (die<diesInLastRow-1) { 
 			die++; 
-			(visibilityIndex==1) ? reveal() : setTimeout("reveal()",300); 
+			(visibilityIndex==1) ? reveal() : setTimeout("reveal()", 250); 
 		} else { 
 			document.getElementById("ergebnisfeld").className="visible"; 
 			document.getElementById("glitchanzeige").className="visible"; 
@@ -269,7 +274,7 @@ function reveal() {
 		} 
 	} else { 
 		revealCalledAfterEdge = true; 
-		setTimeout("reveal()",500); 
+		setTimeout("reveal()", 500); 
 	} 
 } 
  
@@ -294,13 +299,23 @@ function revealReRoll() {
 			row++;																		// falls akuteller Wuerfel letzter in der Zeile ist: Zeilennr++, Wuerfelnr=0 
 			die=0; 
 		} 
-		setTimeout("revealReRoll()",300);												// rufe revealReRoll mit Verzoegerung 
+		setTimeout("revealReRoll()",250);												// rufe revealReRoll mit Verzoegerung 
 	} else if (die<diesInLastRow-1) { 
 		die++; 
-		setTimeout("revealReRoll()",300); 
+		setTimeout("revealReRoll()",250); 
 	} else { 
 		document.getElementById("ergebnisfeld").className="visible"; 
 		document.getElementById("glitchanzeige").className="visible";		 
 		(newSixCount > 0) ? sub.childNodes[sub.childNodes.length-2].className="sixReroll visible" : disableElement("clear",0); 
 	} 
+}
+
+function updateCheat(eps) {
+	a = Math.round(Math.max(a + eps, 0) * 10) / 10;
+	document.getElementById("cheatinfo").innerHTML = a;
+}
+
+function resetCheat() {
+	a = 1;
+	document.getElementById("cheatinfo").innerHTML = a;
 }

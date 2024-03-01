@@ -23,8 +23,12 @@
         }
 
 #wuerfelbutton {
-	font-size:2em;
-	height:2em;
+	height:100px;
+	width:180px;
+	background-image:url(./images/rolling_dice.png);
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
 	}
 	
 #wuerfelfeld {
@@ -37,12 +41,24 @@
 	}
 
 #main {
-	width=80%
+	width=80%;
+	margin: 0 auto;
 	}
 
 #rerollfeld {
 	margin-top:1em;
 	padding-left:2.2%;
+	}
+
+#cheatkasten {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 20px;
+	}
+
+#cheatinfo {
+	color:#707070;
 	}
 
 button.action {
@@ -57,12 +73,17 @@ button.change {
 	padding:.5em 1em;
 	}
 
+button.cheatbutton {
+	color:#707070;
+	background-color:transparent;
+	}
+
 .checkboxlabel {
 	font-weight:bold;
 	}
 	
 .invisible {
-	visibility:hidden;
+	visibility:hidden; 
 	}
 
 .visible {
@@ -124,9 +145,12 @@ td {
 	}
 
 body {
-	background-image:url(./images/background2.jpg);
+	background-image: url(./images/background2.jpg);
+	background-size: cover;
 	background-repeat:no-repeat;
-	background-size:cover;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
 	}
 	
 table {
