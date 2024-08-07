@@ -58,7 +58,7 @@
 	}
 
 #cheatinfo {
-	color:#707070;
+	color:#0c0c0c;
 	}
 
 button.action {
@@ -74,7 +74,7 @@ button.change {
 	}
 
 button.cheatbutton {
-	color:#707070;
+	color:#0c0c0c;
 	background-color:transparent;
 	}
 
@@ -145,7 +145,7 @@ td {
 	}
 
 body {
-	background-image: ;
+	background-image: url('images/background.jpg');
 	background-size: cover;
 	background-repeat:no-repeat;
 	margin: 0;

@@ -12,7 +12,7 @@ var feld;
 var numberOfRows; 
 var diesInLastRow; 
 var a = 0; 	
-var p = 1/3;														// Schummelfaktor, a=1: fair, a>1: mehr Erfolge
+var p = 1/3;														// Schummelfaktor, a=0: fair, a>1: mehr Erfolge
  
 function init() { 
 	var feld = document.getElementById("wuerfelfeld");			 
