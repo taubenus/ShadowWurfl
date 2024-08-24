@@ -4,6 +4,6 @@ RUN mkdir -p /home/shadowurfl
 
 WORKDIR /home/shadowurfl
 
-COPY . /home/shadowurfl
+COPY ./app /home/shadowurfl
 
 CMD ["python","-m", "http.server", "8080"]
